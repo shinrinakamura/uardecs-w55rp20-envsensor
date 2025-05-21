@@ -7,8 +7,8 @@
  *
  * Original License: MIT
  */
-#ifndef Uardecs_mega_h
-#define Uardecs_mega_h
+#ifndef __UARDECS_W55RP20_H__
+#define __UARDECS_W55RP20_H__
 
 // comment out by S.Nakamura 
 // #if defined(__AVR_ATmega2560__) || (__AVR_ATmega1280__) || defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__)
@@ -26,8 +26,8 @@
 #define _UECS_PLATFORM_W55RP20
 
 // added by S.Nakamura
-#include <WiFi.h>         // WiFiClient, WiFiServer を含む
-#include <WiFiUdp.h>      // WiFiUDP（＝EthernetUDPとして使われる）
+#include <WiFi.h>         																			// WiFiClient, WiFiServer を含む
+#include <WiFiUdp.h>      																			// WiFiUDP（＝EthernetUDPとして使われる）
 #include <EthernetCompat.h>                                     // ネットワークのエイリアス設定
 #include <W55RP20lwIP.h>                                        // added by K.Masaki@B&B Lab.　externでも宣言
 #include <pico/unique_id.h>																			// ArduinoEthernet<Wiznet55rp20>
@@ -154,10 +154,10 @@ struct UECSOriginalAttribute {
 
 
 //for U_orgAttribute.status
-#define STATUS_SAFEMODE				1		//safemode jumper was enabled when startup
-#define STATUS_MEMORY_LEAK			2		//Memory leak alert
-#define STATUS_NEEDRESET			4		//Please push reset button
-#define STATUS_PROGRAMUPDATE		8		//new program loaded
+#define STATUS_SAFEMODE				1				//safemode jumper was enabled when startup
+#define STATUS_MEMORY_LEAK			2			//Memory leak alert
+#define STATUS_NEEDRESET			4				//Please push reset button
+#define STATUS_PROGRAMUPDATE		8			//new program loaded
 
 #define STATUS_SAFEMODE_MASK		254		//safemode Release
 
@@ -165,13 +165,13 @@ struct UECSOriginalAttribute {
 /* CCM    ***********************/
 /********************************/
 struct UECSCCM{
-  boolean sender;              // fix
-  const char * name;    // fix
-  const char * type;    // dafault Type
-  const char * unit;    // fix
-  char typeStr[20];		// user edit Type
-  unsigned char decimal;       // fix   
-  char ccmLevel;        // A_1S_0 etc. fix
+  boolean sender;              				// fix
+  const char * name;    							// fix
+  const char * type;    							// dafault Type
+  const char * unit;    							// fix
+  char typeStr[20];										// user edit Type
+  unsigned char decimal;       				// fix   
+  char ccmLevel;        							// A_1S_0 etc. fix
   signed short attribute[4];
   signed short baseAttribute[4];
   signed long value;
@@ -530,7 +530,7 @@ bool UECSAtoI_UChar(char *targetBuffer,unsigned char *ucharValue,int *lastPos);
 void ClearMainBuffer(void);
 // changed by S.Nakamura
 // void UDPAddPGMCharToBuffer(const char* _romword);	// comment out by S.Nakamura 
-void UDPAddConstCharToBuffer(const char* _romword);	// added by S.Nakamura
+void UDPAddConstCharToBuffer(const char* _romword);		// added by S.Nakamura
 void UDPAddCharToBuffer(char* word);
 void UDPAddValueToBuffer(long value);
 void UDPFilterToBuffer(void);

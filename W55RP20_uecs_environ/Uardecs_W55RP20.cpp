@@ -305,7 +305,7 @@ void UECScheckUpDate(UECSTEMPCCM* _tempCCM, unsigned long _time,int startid){
 /* 16529 Response   *************/
 /********************************/
 // ノードスキャンまたはCCMスキャンのレスポンス
-// 返り値：true：応答の生成、false：街灯処理なし
+// 返り値：true：応答の生成、false：該当処理なし
 boolean UECSresNodeScan(){
 	
 	int i;
@@ -379,7 +379,6 @@ boolean UECSresNodeScan(){
 		}
 		
 		//CCMSCAN response
-		// 初期化
 		ClearMainBuffer();
 		UDPAddConstCharToBuffer(&(UECSccm_XMLHEADER[0]));
 		UDPAddConstCharToBuffer(&(UECSccm_UECSVER_E10[0]));
@@ -861,7 +860,7 @@ void HTTPsendPageCCM(){
 			} 
 			HTTPAddConstCharToBuffer(&(UECStdtd[0])); //</td><td> 
 
-			// 最終受信からの経過秒数（１０時間いない）
+			// 最終受信からの経過秒数（１０時間以内）
 			if(U_ccmList[i].flagStimeRfirst && U_ccmList[i].sender == false){
 
 				if(U_ccmList[i].recmillis<36000000){
@@ -989,7 +988,7 @@ void HTTPsendPageEDITCCM(int ccmid){
 		//ccm name
 		HTTPAddConstCharToBuffer(U_ccmList[i].name);
 		HTTPAddConstCharToBuffer(&(UECStdtd[0])); //</td><td>
-		// S / R
+		// 送信受信判断
 	 	if(U_ccmList[i].sender){
 	 		HTTPAddConstCharToBuffer(UECSTxtPartS);
 	 	}else{
@@ -1299,7 +1298,7 @@ void HTTPGetFormDataLANSettingPage(){
 		if(UECSbuffer[startPos]!='&'){return ;}//last '&' not found
 		// 小数点以下の値が0であることを確認（整数であることを期待）
 		if(tempDecimal!=0){
-			Serial.println("It has a decimal point.");  // 確認用の表示
+			// Serial.println("It has a decimal point.");  // 確認用の表示
 			return ;
 		}
 		
@@ -1441,7 +1440,7 @@ void HTTPcheckRequest(){
 		else if(UECSFindConstChar(UECSbuffer,&(UECSaccess_NOSPC_GETP2A[0]),&progPos)){
 			// Serial.println("");	// デバッグ用のメッセージ
 			// Serial.println("************get form lan setting page start*******");	// デバッグ用のメッセージ
-			HTTPGetFormDataLANSettingPage();	// 問題の切り分けの為にコメントアウト
+			HTTPGetFormDataLANSettingPage();
 			HTTPsendPageLANSetting();
 		}
 		
@@ -1560,11 +1559,12 @@ void PrintSavedWebData() {
 		
     long value = UECS_EEPROM_readLong(EEPROM_WEBDATA + i * 4);
 	
-		Serial.println("print web data"); // 確認用の表示
-    Serial.print("Index ");
-    Serial.print(i);
-    Serial.print(": ");
-    Serial.println(value);
+		// 確認用の表示
+		// Serial.println("print web data"); 
+    // Serial.print("Index ");
+    // Serial.print(i);
+    // Serial.print(": ");
+    // Serial.println(value);
 
   }
 }
@@ -1572,9 +1572,10 @@ void PrintSavedWebData() {
 // -----------------------------------------------------------
 void UECSsetup(){
 
-  Serial.println("uecs set up start");
+  // Serial.println("uecs set up start");
+
 	EEPROM.begin(EEPROMAREA);		// eepromの初期化
-  Serial.println("EEPROM initialized");
+  // Serial.println("EEPROM initialized");
 #ifdef DEBUG_MOD
 	PrintSavedWebData();	// eepromのデータを読み出して確認
 #endif
@@ -1588,11 +1589,11 @@ void UECSsetup(){
 	if(digitalRead(U_InitPin) == U_InitPin_Sense || UECS_EEPROM_readLong(EEPROM_IP)==-1){
 	
 		U_orgAttribute.status|=STATUS_SAFEMODE;
-    Serial.println("start safe mode");		
+    // Serial.println("start safe mode");		// 確認用の出力
 	}else{
 		
 		U_orgAttribute.status&=STATUS_SAFEMODE_MASK;//Release safemode
-		Serial.println("start musk safe mode");	
+		// Serial.println("start musk safe mode");		// 確認用の出力
 	}
 
   UECSinitOrgAttribute();
@@ -1600,8 +1601,8 @@ void UECSsetup(){
   UserInit();						// uecs ccmをセット
   UECSstartEthernet();	// イーサネットとサーバーを定義
 
-  Serial.println("uecs set up done");
-  Serial.println("");
+  // Serial.println("uecs set up done");	// 確認用の出力
+  // Serial.println("");
 }
 //---------------------------------------------
 // プログラムが更新されたかどうかチェックする
@@ -1635,7 +1636,7 @@ void UECSCheckProgramUpdate() {
   if (needCommit) {
     EEPROM.commit();  // 実際のフラッシュへの書き込み
 		// 確認用の表示
-		Serial.println("uecs program update check eeprom commit");
+		// Serial.println("uecs program update check eeprom commit");	// 確認用の出力
   }
 }
 
@@ -1675,8 +1676,7 @@ void UECS_EEPROM_SaveCCMType(int ccmid)
     // 一度だけ commit を実行（変更があった場合のみ）
     if (needCommit) {
         EEPROM.commit();
-				// 確認用の表示
-				Serial.println("save ccm type eeprom commit");
+				// Serial.println("save ccm type eeprom commit");	// 確認用の出力
     }
 }
 
@@ -1778,8 +1778,9 @@ void UECSstartEthernet(){
 	// Macアドレスの取得
 	byte mac[6];
 	generate_mac_addr (0, (byte*)mac) ;
-   Serial.printf("MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
-                  mac[0],  mac[1], mac[2], mac[3], mac[4], mac[5] );
+	// 確認用のコンソール出力
+	// Serial.printf("MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
+	// 							mac[0],  mac[1], mac[2], mac[3], mac[4], mac[5] );
 	
 	U_orgAttribute.mac[0] = mac[0];
 	U_orgAttribute.mac[1] = mac[1];
@@ -1791,12 +1792,12 @@ void UECSstartEthernet(){
   // モードに応じたネットワークスタート 
   if(U_orgAttribute.status&STATUS_SAFEMODE){
 		
-  	Serial.println("safe mode network start");
+  	// Serial.println("safe mode network start");	
   	Ethernet.begin(U_orgAttribute.mac, defaultip, defaultdns,defaultgateway,defaultsubnet);	// デフォルトのネットワーク設定
 	}
   else{
 
-		Serial.println("masked safe mode network start");
+		// Serial.println("masked safe mode network start");
 		Ethernet.begin(U_orgAttribute.mac, U_orgAttribute.ip, U_orgAttribute.dns, U_orgAttribute.gateway, U_orgAttribute.subnet);
 	}
 
@@ -2027,7 +2028,7 @@ void UDPAddConstCharToBuffer(const char* word){
 		wp++;
 	}
 
-	// MemoryWatching();
+	MemoryWatching();
 }
 
 
@@ -2038,7 +2039,7 @@ void UDPAddCharToBuffer(char* word){
 	strcat(UECSbuffer,word);
 	wp=strlen(UECSbuffer);
   
-	// MemoryWatching();
+	MemoryWatching();
 }
 //-----------------------------------
 // UDPに送信する値を入れる
@@ -2046,7 +2047,7 @@ void UDPAddValueToBuffer(long value){
 	sprintf(&UECSbuffer[wp], "%ld", value);
 	wp=strlen(UECSbuffer);
 	
-	// MemoryWatching();
+	MemoryWatching();
 }
 //-----------------------------------
 // html出力の内容をバッファに詰める
@@ -2072,7 +2073,7 @@ void HTTPAddConstCharToBuffer(const char* word){
 		}
 	}
 
-	// MemoryWatching();
+	MemoryWatching();
 }
 
 
@@ -2093,7 +2094,7 @@ void HTTPAddCharToBuffer(char* word){
 		}
 	}
 
-	// MemoryWatching();
+	MemoryWatching();
 }
 
 //---------------------------------------------
@@ -2108,7 +2109,7 @@ void HTTPAddValueToBuffer(long value){
 		HTTPRefreshBuffer();
 	}
 
-	// MemoryWatching();
+	MemoryWatching();
 }
 
 // UECSバッファが上限に達した時はクライアントに送信する
@@ -2179,7 +2180,7 @@ void UDPFilterToBuffer(void){
 		}
 	}
 	
-	// MemoryWatching();
+	MemoryWatching();
 }
 
 //------------------------------------
@@ -2280,7 +2281,7 @@ void HTTPFilterToBuffer(void){
 		}
 	}
   
-  // MemoryWatching();
+  MemoryWatching();
 }
 
 //------------------------------------

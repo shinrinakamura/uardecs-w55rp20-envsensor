@@ -1,8 +1,17 @@
 /////////////////////////////////////////
-//UARDECS Sample Program "TempHumidSensor_SHT3x"
-//I2C connection test with SHT3x Ver1.1
-//By H.kurosaki 2018/05/30
-//////////////////////////////////////////
+// UARDECS Sample Program "TempHumidSensor_SHT3x"
+// I2C connection test with SHT3x Ver1.1
+// Original by H. Kurosaki (2018/05/30)
+//
+// Ported and Modified for W55RP20 by Shin Nakamura
+// - Adapted to W55RP20-EVB-PICO using lwIP stack
+// - Removed PROGMEM and adjusted for Arduino RP2040 core
+// - Ethernet communication enabled via built-in MAC (EthernetCompat)
+// - Safe Mode and web-based configuration implemented
+// - MAC address auto-generated from board unique ID
+// - Compatible with I2C sensor SHT3x via GPIO4 (SDA), GPIO5 (SCL)
+/////////////////////////////////////////
+
 
 //Sensirion SHT3xシリーズから温度と湿度を読み出します。
 // W55RP20 EVB Picoでのピン設定
@@ -12,7 +21,7 @@
 //[5V3]-[VCC]
 //[GND]-[GND]
 
-// センサのアドレスはsht3x.hで0x45に設定しています
+// センサのアドレスはsht3x.hで0x45に設定しています(必要があれば確認してください)
 
 //注意！
 //湿度センサは有機溶剤や酸・アルカリで損傷することがあります。
@@ -20,7 +29,7 @@
 //梱包時に使用するビニール袋やケースのプラスチック素材から揮発する有機ガスで
 //損傷することがあるので注意すること。
 
-#include <EthernetCompat.h>                                     // 移植のためには、この内容一読推奨
+#include <EthernetCompat.h>
 #include <W55RP20lwIP.h>                                        // added by K.Masaki@B&B Lab.
 #include "Uardecs_W55RP20.h"
 
@@ -209,7 +218,7 @@ void setup(){
   delay(2000);   // シリアル通信の確立を待つ(時間がかかります)
   // シリアルモニタが開かれるまで待つ（PCと接続されていないと動作しません）
   // while (!Serial) {
-  //   delay(10); // ゆっくり待つ（CPU負荷軽減）
+  //   delay(10); // ゆっくり待つ
   // }
   Serial.println("W55RP20 module start");
 
