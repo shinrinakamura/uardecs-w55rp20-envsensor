@@ -52,6 +52,13 @@ byte defaultgateway[] = {192, 168, 11, 1};  // ゲートウェイのデフォル
 byte defaultdns[]     = {0,0,0,0};          // dnsのデフォルト設定
 byte defaultsubnet[]  = {255,255,255,0};    // サブネットマスクのデフォルト設定
 
+// ピン設定（必要に応じて変更可能）
+#define I2C_SDA_PIN  4   // 例: GPIO4
+#define I2C_SCL_PIN  5   // 例: GPIO5
+
+int i2c_sda_pin = I2C_SDA_PIN;
+int i2c_scl_pin = I2C_SCL_PIN;
+
 #define OPRMODE_ERR_SHT3xSENSERR       0x20000000 //0 01000 00000 0 0000 0000000000000000 //センサ異常
 
 SHT3x sht3x = SHT3x();

@@ -4,6 +4,9 @@
 #include "Arduino.h"
 #include "Wire.h"
 
+extern int i2c_sda_pin;
+extern int i2c_scl_pin;
+
 #define SHT3x_ADDR    0x45  // センサアドレス
 #define SHT3x_MEAS_HIGHREP_STRETCH 0x2C06
 #define SHT3x_MEAS_MEDREP_STRETCH  0x2C0D

@@ -3,7 +3,12 @@
 SHT3x::SHT3x() {
 }
 
+
 boolean SHT3x::begin(uint8_t i2caddr) {
+  
+  Wire.setSDA(i2c_sda_pin);
+  Wire.setSCL(i2c_scl_pin);
+
   Wire.begin();
   _i2caddr = i2caddr;
   reset();
