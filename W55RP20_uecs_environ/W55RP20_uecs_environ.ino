@@ -30,7 +30,7 @@
 //損傷することがあるので注意すること。
 
 #include <EthernetCompat.h>
-#include <W55RP20lwIP.h>                                        // added by K.Masaki@B&B Lab.
+#include <W55RP20lwIP.h>
 #include "Uardecs_W55RP20.h"
 
 #include <Wire.h>
@@ -52,7 +52,7 @@ byte defaultgateway[] = {192, 168, 11, 1};  // ゲートウェイのデフォル
 byte defaultdns[]     = {0,0,0,0};          // dnsのデフォルト設定
 byte defaultsubnet[]  = {255,255,255,0};    // サブネットマスクのデフォルト設定
 
-// ピン設定（必要に応じて変更可能）
+// I2Cのピン設定（必要に応じて変更可能）
 #define I2C_SDA_PIN  4   // 例: GPIO4
 #define I2C_SCL_PIN  5   // 例: GPIO5
 
