@@ -67,7 +67,7 @@ SHT3x sht3x = SHT3x();
 //IP reset jupmer pin setting
 //IPアドレスリセット用ジャンパーピン設定
 /////////////////////////////////////
-const byte U_InitPin = 2;       // アクティブロー設定 commented by S.Nakamura
+const byte U_InitPin = 14;      // 端のピンでGNDが隣にあり使用が容易なため commented by S.Nakamura
 // const byte U_InitPin_Sense=HIGH;
 const byte U_InitPin_Sense=LOW; // アクティブロー設定 commented by S.Nakamura
 

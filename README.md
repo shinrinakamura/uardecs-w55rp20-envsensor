@@ -56,7 +56,7 @@ W55RP20 に内蔵された Ethernet 機能と、軽量 TCP/IP スタック（lwI
 1. **W55RP20-EVB-PICO 用のボードマネージャをインストールしてください。**  
    👉 [参考リンク：Karakuri Musha](https://karakuri-musha.com/inside-technology/arduino-raspberrypi-pico-helloworld01/)
 
-2. **GPIO2 を GND に接続して Safe Mode に入ります。**
+2. **GPIO14 を GND に接続して Safe Mode に入ります。**
 
 3. **Safe Mode 中のデフォルトネットワーク設定は `.ino` ファイル内で調整してください。**
 
