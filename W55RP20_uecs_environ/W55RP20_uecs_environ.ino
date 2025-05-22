@@ -31,7 +31,7 @@
 
 #include <EthernetCompat.h>
 #include <W55RP20lwIP.h>
-#include "Uardecs_W55RP20.h"
+#include "Uardecs_RP20.h"
 
 #include <Wire.h>
 #include "SHT3x.h"
